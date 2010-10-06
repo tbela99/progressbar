@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>File Upload</title>
+<style type="text/css">
+
+.progressbar {
+
+	width: 200px;
+	margin: 10px 0;
+	cursor:pointer;
+}
+.progressbar + .progressbar {
+
+	line-height: 13px;
+}
+</style>
+<script type="text/javascript" src="../mootools-core.js"></script>
+<script type="text/javascript" src="../number.js"></script>
+<script type="text/javascript" src="../PeriodicalExecuter.js"></script>
+<script type="text/javascript" src="../Source/progressbar.js"></script>
+</head>
+
+<body>
+<a href="#0">0</a> | <a href="#10">10</a> | <a href="#23">23</a> | <a href="#50">50</a> | <a href="#73">73</a> | <a href="#90">90</a> | <a href="#100">100</a>
+<div class="progressbar"></div>
+<div class="progressbar"></div>
+<script type="text/javascript">
+
+	var progressbars = $$('.progressbar'),
+	
+		progressbar0 = new ProgressBar({
+			container: progressbars[0], 
+			fillColor: '#175CCF', 
+			color: '#F7E991', 
+			value: .05,
+			//onComplete: function () {
+			
+			//},
+			onChange: function (value) {
+			
+				pe.stop();
+				//update displayed text
+				progressbar0.setText('completed: ' + (100 * progressbar0.getValue()).format() + '%')
+			}
+		}),
+		
+		progressbar1 = new ProgressBar({
+			container: progressbars[1], 
+			value: .05,
+			backgroundImage: 'images/loading.gif'
+		}),
+		
+		//timer to update displayed text as the value change
+		pe = new PeriodicalExecuter(function () { progressbar0.setText('completed: ' + (100 * progressbar0.getValue()).format() + '%') }, .1).stop();
+	
+	//set value onclick
+	progressbars.each(function (progressbar, index) {
+	
+		progressbar.addEvent('click', function (e) {
+				
+			window['progressbar' + index].setValue(e.client.x / progressbar.offsetWidth)
+		})
+	});
+	
+	//preset values
+	document.getElements('a').each(function (el) {
+	
+		el.addEvent('click', function (e) {
+			
+			e.stop(); 
+			pe.registerCallback(); 
+			progressbar0.setValue(el.get('text') / 100) 
+			progressbar1.setValue(el.get('text') / 100) 
+		})
+	})
+</script>
+</body>
+</html>
