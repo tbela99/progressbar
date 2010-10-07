@@ -10,7 +10,7 @@ requires:
   core:1.2.4: 
   - Element.Event
   - Fx.Elements
-provides: [Progressbar]
+provides: [ProgressBar]
 ...
 */
 
