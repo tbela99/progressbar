@@ -4,6 +4,7 @@ ProgressBar
 Javascript progressbar
 
 [Demo](http://jsfiddle.net/tbela99/5UR8v/1/)
+
 ![Screenshot](http://github.com/tbela99/progressbar/raw/master/screenshot.png)
 
 How to use
@@ -26,6 +27,7 @@ object providing methods to control field upload.
 ##### Options:
 
 - container - (*mixed*) progressbar container.
+- width - (*int*, optional) progressbar width. default to the container width.
 - value - (*number*, optional) initial value of the progressbar. value is always between 0 and 1 (100%). default to 0. 
 - text - (*string*, optional) progressbar text.
 - color - (*string*, optional) progressbar color.
@@ -42,10 +44,15 @@ Fired after the value is changed.
 ##### Arguments:
 
 - value - (*number*) the current value
+- progressbar - (*object*) this progressbar
 
 ##### onComplete
 
 Fired after the value has been set to 1.
+
+##### Arguments:
+
+- progressbar - (*object*) this progressbar
 
 ##### setText
 

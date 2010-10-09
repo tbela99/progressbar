@@ -15,7 +15,6 @@
 </style>
 <script type="text/javascript" src="../mootools-core.js"></script>
 <script type="text/javascript" src="../number.js"></script>
-<script type="text/javascript" src="../PeriodicalExecuter.js"></script>
 <script type="text/javascript" src="../Source/progressbar.js"></script>
 </head>
 
@@ -39,22 +38,17 @@
 			//},
 			onChange: function (value) {
 			
-				pe.stop();
 				//update displayed text
-				progressbar.setText('completed: ' + (100 * progressbar.getValue()).format() + '%')
+				progressbar.setText('completed: ' + (100 * value).format() + '%')
 			}
-		}),
+		});
 		
-		//timer to update displayed text as the value change
-		pe = new PeriodicalExecuter(function () { progressbar0.setText('completed: ' + (100 * progressbar.getValue()).format() + '%') }, .1).stop();
-	
 	//preset values
 	document.getElements('a').each(function (el) {
 	
 		el.addEvent('click', function (e) {
 			
 			e.stop(); 
-			pe.registerCallback(); 
 			progressbar.setValue(el.get('text') / 100) 
 		})
 	})

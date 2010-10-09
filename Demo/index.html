@@ -18,7 +18,6 @@
 </style>
 <script type="text/javascript" src="../mootools-core.js"></script>
 <script type="text/javascript" src="../number.js"></script>
-<script type="text/javascript" src="../PeriodicalExecuter.js"></script>
 <script type="text/javascript" src="../Source/progressbar.js"></script>
 </head>
 
@@ -28,51 +27,41 @@
 <div class="progressbar"></div>
 <script type="text/javascript">
 
-	var progressbars = $$('.progressbar'),
-	
-		progressbar0 = new ProgressBar({
-			container: progressbars[0], 
+	var options = [{
 			fillColor: '#175CCF', 
 			color: '#F7E991', 
 			value: .05,
 			//onComplete: function () {
 			
 			//},
-			onChange: function (value) {
+			onChange: function (value, progressbar) {
 			
-				pe.stop();
 				//update displayed text
-				progressbar0.setText('completed: ' + (100 * progressbar0.getValue()).format() + '%')
+				progressbar.setText('completed: ' + (100 * value).format() + '%')
 			}
-		}),
-		
-		progressbar1 = new ProgressBar({
-			container: progressbars[1], 
+		},
+		{
 			value: .05,
 			backgroundImage: 'images/loading.gif'
-		}),
-		
-		//timer to update displayed text as the value change
-		pe = new PeriodicalExecuter(function () { progressbar0.setText('completed: ' + (100 * progressbar0.getValue()).format() + '%') }, .1).stop();
+		}],
+		elements = $$('.progressbar').map(function (div, index) {
 	
-	//set value onclick
-	progressbars.each(function (progressbar, index) {
-	
-		progressbar.addEvent('click', function (e) {
+			return div.store('progressbar', new ProgressBar($merge(options[index], {container: div}))).addEvent('click', function (e) {
 				
-			window['progressbar' + index].setValue(e.client.x / progressbar.offsetWidth)
+					div.retrieve('progressbar').setValue(e.client.x / div.offsetWidth)
+				})
 		})
-	});
-	
+		
 	//preset values
 	document.getElements('a').each(function (el) {
 	
 		el.addEvent('click', function (e) {
 			
 			e.stop(); 
-			pe.registerCallback(); 
-			progressbar0.setValue(el.get('text') / 100) 
-			progressbar1.setValue(el.get('text') / 100) 
+			elements.each(function (div) {
+			
+				div.retrieve('progressbar').setValue(el.get('text') / 100) 
+			})
 		})
 	})
 </script>
