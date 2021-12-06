@@ -5,7 +5,7 @@ Javascript progressbar
 
 [Demo](http://jsfiddle.net/tbela99/5UR8v/1/)
 
-![Screenshot](http://github.com/tbela99/progressbar/raw/master/screenshot.png)
+![Screenshot](https://github.com/tbela99/progressbar/raw/master/screenshot.png)
 
 How to use
 ---------------------
